@@ -9,20 +9,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class TranslationController {
+    @Autowired
+    DictionaryService dictionaryService;
 
     @GetMapping (value = "/dictionary")
     public String showForm () {
         return "input";
     }
 
-    @Autowired
-    DictionaryService service;
-
     @PostMapping (value = "/translate")
     public String translate (String txtSearch, Model model) {
 
         model.addAttribute("word", txtSearch);
-        model.addAttribute("result", service.find(txtSearch));
+        model.addAttribute("result", dictionaryService.find(txtSearch));
 
         return "translate";
     }
