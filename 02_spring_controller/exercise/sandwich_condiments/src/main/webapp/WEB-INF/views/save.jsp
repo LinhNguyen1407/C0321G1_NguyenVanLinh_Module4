@@ -13,12 +13,19 @@
 </head>
 <body>
 <h1>List condiments</h1>
-<table>
-    <c:forEach items="${condiments}" var="condiment">
-    <tr>
-        <td>${condiment}</td>
-    </tr>
-    </c:forEach>
-</table>
+<c:if test="${empty message}">
+    <table>
+        <c:forEach items="${condiments}" var="condiment">
+            <tr>
+                <td>${condiment}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
+<c:if test="${not empty message}">
+    <h2>${message}</h2>
+</c:if>
+
 </body>
 </html>

@@ -16,9 +16,15 @@ public class CondimentController {
     }
 
     @RequestMapping(value = "/save")
-    public String save(@RequestParam("condiment") String[] condiment, Model model) {
+    public String save(@RequestParam(value = "condiment", required = false) String[] condiment, Model model) {
 
-        model.addAttribute("condiments", condiment);
+        if (condiment != null) {
+            model.addAttribute("condiments", condiment);
+            model.addAttribute("message", "");
+        } else {
+            model.addAttribute("message", "Not found condiment");
+        }
+
         return "save";
     }
 }
