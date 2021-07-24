@@ -45,31 +45,17 @@ public class BlogController {
         return modelAndView;
     }
 
-//    @GetMapping("/customers")
-//    public ModelAndView listCustomers() {
-//        Iterable<Customer> customers = customerService.findAll();
-//        ModelAndView modelAndView = new ModelAndView("/customer/list");
-//        modelAndView.addObject("customers", customers);
-//        return modelAndView;
-//    }
-
     @GetMapping("/blogs")
-    public ModelAndView listBlogs(@PageableDefault(value = 3, sort = "createdTime", direction = Sort.Direction.ASC) Pageable pageable){
-        Page<Blog> blogs = blogService.findAll(pageable);
-        ModelAndView modelAndView = new ModelAndView("/blog/list");
-        modelAndView.addObject("blogs", blogs);
-        return modelAndView;
-    }
-
-    @PostMapping("/blogs")
-    public ModelAndView listBlogs(@RequestParam("search") Optional<String> search, Pageable pageable){
-        Page<Blog> blogs;
-        if(search.isPresent()){
-            blogs = blogService.findAllByTitleContaining(search.get(), pageable);
-        } else {
-            blogs = blogService.findAll(pageable);
+    public ModelAndView listBlogs(@PageableDefault(value = 3, sort = "createdTime", direction = Sort.Direction.ASC) Pageable pageable,
+                                  @RequestParam Optional<String> keyword) {
+        String keywordValue = "";
+        if(keyword.isPresent()){
+            keywordValue = keyword.get();
         }
+
         ModelAndView modelAndView = new ModelAndView("/blog/list");
+        Page<Blog> blogs = blogService.findAllByTitleContaining(keywordValue, pageable);
+        modelAndView.addObject("keywordValue", keywordValue);
         modelAndView.addObject("blogs", blogs);
         return modelAndView;
     }
