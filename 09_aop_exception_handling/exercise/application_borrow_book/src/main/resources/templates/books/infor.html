@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Information book</title>
+</head>
+<body>
+<h1>Information book: <span th:text="${book.name}"></span></h1>
+<p>
+    <a href="/book">Book list</a>
+</p>
+<form th:action="@{/book/update-borrow/__${book.id}__ }" method="post">
+    <table>
+        <tr>
+            <td>Category:</td>
+            <td th:text="${book.category}"></td>
+        </tr>
+        <tr>
+            <td>Author:</td>
+            <td th:text="${book.author}"></td>
+        </tr>
+        <tr>
+            <td>Quantity:</td>
+            <td th:text="${book.quantity}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Borrow book"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
