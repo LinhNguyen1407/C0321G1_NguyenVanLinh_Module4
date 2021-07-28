@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
+</head>
+<body>
+<p>
+    <a class="btn btn-success" th:href="@{/shop}" role="button">Go to shop</a>
+</p>
+<h3 class="text-primary text-center">Your Cart</h3>
+<h6 class="text-primary">Total Items: <span th:text="${cart.countItemQuantity()}"></span></h6>
+<h6 class="text-primary">Total Products: <span th:text="${cart.countProductQuantity()}"></span></h6>
+<div class="container">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>No.</th>
+            <th>Item</th>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product, productStat: ${cart.products}">
+            <td th:text="${productStat.index + 1}"></td>
+            <td th:text="${product.getKey().name}"></td>
+            <td><img th:src="${product.getKey().image}" style="width: 70px; height: auto"></td>
+            <td th:text="${product.getKey().description}"></td>
+            <td th:text="${product.getKey().price}"></td>
+            <td>
+                <a id="decrease_button"
+                   th:href="@{/add/__${product.getKey().id}__(action='show', quantityChange='decrease')}"
+                   th:text="${'-'}" style="text-decoration: none"></a>
+                <span th:text="${product.getValue()}"></span>
+                <a id="increase_button"
+                   th:href="@{/add/__${product.getKey().id}__(action='show', quantityChange='increase')}"
+                   th:text="${'+'}" style="text-decoration: none"></a>
+            </td>
+            <td>
+                <a class="btn btn-danger" th:href="@{/delete/__${product.getKey().id}__}" role="button">Delete</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td th:text="${cart.countTotalPayment()}" colspan="5" class="text-danger"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{/payment}" role="button">Payment</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="/jquery/jquery-3.5.1.min.js"></script>
+<script src="/jquery/popper.min.js"></script>
+<script src="/bootstrap4/js/bootstrap.js"></script>
+</body>
+</html>

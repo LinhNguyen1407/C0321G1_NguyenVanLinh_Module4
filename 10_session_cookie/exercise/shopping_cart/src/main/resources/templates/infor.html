@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Information Product</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
+</head>
+<body>
+<p>
+    <a class="btn btn-success" th:href="@{/shop}" role="button">Go to shop</a>
+</p>
+<div class="container">
+    <div class="card mb-3" style="max-width: 700px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img th:src="${product.image}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.name}"></h5>
+                    <p class="card-text" th:text="Description + ': ' + ${product.description}"></p>
+                    <strong class="card-text" th:text="Price + ': ' + ${product.price}"></strong>
+                    <br>
+                    <a class="btn btn-success mt-5" th:href="@{/add/__${product.id}__(action='show', quantityChange='increase')}" role="button">Add To Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/jquery/jquery-3.5.1.min.js"></script>
+<script src="/jquery/popper.min.js"></script>
+<script src="/bootstrap4/js/bootstrap.js"></script>
+</body>
+</html>

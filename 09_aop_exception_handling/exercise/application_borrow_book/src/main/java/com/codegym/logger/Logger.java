@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Aspect
 public class Logger {
 
+    int count = 0;
+
     @Pointcut("execution(* com.codegym.model.service.BookService.save(..))")
     public void addPointCut(){
     }
@@ -26,7 +28,8 @@ public class Logger {
 
     @After("countActivities()")
     public void logAfterActions(JoinPoint joinPoint) {
-        System.err.println("After method name: " + joinPoint.getSignature().getName() +
+        System.err.println("Count views " + ++count +
+                " - After method name: " + joinPoint.getSignature().getName() +
                            " - Time: " + LocalDateTime.now());
     }
 }
