@@ -32,7 +32,7 @@ public class ProductController {
     }
 
     @GetMapping("/add/{id}")
-    public String addToCart(@PathVariable Long id, @ModelAttribute Cart cart,
+    public String addToCart(@PathVariable Long id, @SessionAttribute Cart cart,
                             @RequestParam("action") String action,
                             @RequestParam("quantityChange") String quantityChange,
                             RedirectAttributes redirectAttributes) {
@@ -68,7 +68,7 @@ public class ProductController {
     }
 
     @GetMapping("/delete/{id}")
-    public String removeItemFromCart(@PathVariable Long id, @ModelAttribute Cart cart) {
+    public String removeItemFromCart(@PathVariable Long id, @SessionAttribute Cart cart) {
         cart.removeItemFromCart(productService.findById(id).get());
         return "redirect:/shopping-cart";
     }
