@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogs</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap4/css/bootstrap.css">
+</head>
+<body>
+<h1>Blogs</h1>
+<div>
+    <p>Search by title:</p>
+    <input type="text" id="keyword"/>
+    <input type="button" value="Search" id="search"/>
+</div>
+<br>
+<div class="alert alert-danger" role="alert" style="display: none">
+    <strong>Not found</strong>
+</div>
+<div>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Create Time</th>
+            <th>Category</th>
+        </tr>
+    </table>
+</div>
+<button class="btn btn-primary" id="nextPage">Next page</button>
+
+<script src="jquery/jquery-3.5.1.min.js"></script>
+<script>
+    let page = 0;
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/blogs",
+            dataType: 'json',
+            success: function (data) {
+                let content = [];
+                for(let i = 0; i < data.content.length; i++) {
+                    content.push('<tr>');
+                    content.push('<td>' + data.content[i].title + '</td>')
+                    content.push('<td>' + data.content[i].content + '</td>')
+                    content.push('<td>' + data.content[i].createdTime + '</td>')
+                    content.push('<td>' + data.content[i].category.name + '</td>')
+                    content.push('</tr>');
+                }
+                $('table').append($(content.join('')));
+            }
+        })
+
+        $('#search').click(function () {
+            let value = $('#keyword').val()
+            $('table').empty();
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/blogs/search?keyword=" + value,
+                dataType: 'json',
+                success: function (data) {
+                    if (typeof data === 'undefined' || !data.length) {
+                        $('.alert-danger').css("display","block");
+                    } else {
+                        $('.alert-danger').css("display","none");
+                        let result = '<tr>\n' +
+                            '            <th>Title</th>\n' +
+                            '            <th>Content</th>\n' +
+                            '            <th>Create Time</th>\n' +
+                            '            <th>Category</th>\n' +
+                            '        </tr>';
+                        let content = [];
+                        for(let i = 0; i < data.length; i++) {
+                            content.push('<tr>');
+                            content.push('<td>' + data[i].title + '</td>')
+                            content.push('<td>' + data[i].content + '</td>')
+                            content.push('<td>' + data[i].createdTime + '</td>')
+                            content.push('<td>' + data[i].category.name + '</td>')
+                            content.push('</tr>');
+                        }
+                        result += content.join('');
+                        $('table').append(result);
+                    }
+                }
+            })
+        })
+
+        $('#nextPage').click(function () {
+            page++;
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/blogs?page=" + page,
+                dataType: 'json',
+                success: function (data) {
+                    let content = [];
+                    for(let i = 0; i < data.content.length; i++) {
+                        content.push('<tr>');
+                        content.push('<td>' + data.content[i].title + '</td>')
+                        content.push('<td>' + data.content[i].content + '</td>')
+                        content.push('<td>' + data.content[i].createdTime + '</td>')
+                        content.push('<td>' + data.content[i].category.name + '</td>')
+                        content.push('</tr>');
+                    }
+                    $('table').append($(content.join('')));
+                }
+            })
+        })
+    })
+</script>
+
+</body>
+</html>
