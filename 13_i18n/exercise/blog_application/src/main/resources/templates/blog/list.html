@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{blog.title}"></title>
+</head>
+<body>
+<h1 th:text="#{blog.heading}"></h1>
+Language: <a href="?lang=en">English</a> | <a href="?lang=vi">Vietnamese</a>
+<p>
+    <a href="/create-blog" th:text="#{blog.link}"></a>
+</p>
+<form>
+    <span th:text="#{blog.search_label}"></span>
+    <input name="keyword" type="text"/>
+    <input type="submit" th:value="#{blog.submit_label}"/>
+</form>
+<br/>
+<table border="1">
+    <tr>
+        <th th:text="#{blog.thead_no}"></th>
+        <th th:text="#{blog.thead_title}"></th>
+        <th th:text="#{blog.thead_create_time}"></th>
+        <th th:text="#{blog.thead_category}"></th>
+        <th th:text="#{blog.thead_edit}"></th>
+        <th th:text="#{blog.thead_delete}"></th>
+    </tr>
+    <th:block th:each="blog, blogStat : ${blogs}">
+        <tr>
+            <td th:text="${blogStat.index + 1}"></td>
+            <td><a th:href="@{/view-blog/__${blog.id}__}" th:text="${blog.title}"></a></td>
+            <td th:text="${blog.createdTime}"></td>
+            <td><a th:if="${blog.category}" th:href="@{/view-category/__${blog.category.id}__}" th:text="${blog.category.name}"></a></td>
+            <td><a th:href="@{/edit-blog/__${blog.id}__ }" th:text="#{blog.tbody_edit}"></a></td>
+            <td><a th:href="@{/delete-blog/__${blog.id}__ }" th:text="#{blog.tbody_delete}"></a></td>
+        </tr>
+    </th:block>
+</table>
+<div>
+    <a th:href="@{'/blogs'(page=${blogs.number - 1}, keyword=${keywordValue})}" th:if="${blogs.hasPrevious()}" th:text="#{blog.page_previous}"></a>
+    <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    <a th:href="@{'/blogs'(page=${blogs.number + 1} , keyword=${keywordValue})}" th:if="${blogs.hasNext()}" th:text="#{blog.page_next}"></a>
+</div>
+</body>
+</html>
