@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
+</head>
+<body>
+<div th:fragment="header-menu">
+    <nav class="navbar navbar-light bg-light clearfix border-bottom border-dark">
+        <img class="float-left" src="img/logo.jpg" width="60" height="60" alt="">
+        <h2 class="text-center mt-2">WELCOME FURAMA RESORT DANANG</h2>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-dark">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/"><strong>Home</strong>
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employee"><strong>Employee</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/customer"><strong>Customer</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/service"><strong>Service</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contract"><strong>Contract</strong></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</body>
+</html>
