@@ -1,6 +1,7 @@
-package com.codegym.dto.contract;
+package com.codegym.dto;
 
-import com.codegym.dto.service.AttachService;
+import com.codegym.model.entity.contract.Contract;
+import com.codegym.model.entity.service.AttachService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContractDetail {
+public class ContractDetailDto {
 
     private Long id;
     private Long quantity;

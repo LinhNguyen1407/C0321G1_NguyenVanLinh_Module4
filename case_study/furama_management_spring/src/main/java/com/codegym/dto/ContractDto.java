@@ -1,8 +1,8 @@
-package com.codegym.dto.contract;
+package com.codegym.dto;
 
-import com.codegym.dto.customer.Customer;
-import com.codegym.dto.employee.Employee;
-import com.codegym.dto.service.Service;
+import com.codegym.model.entity.customer.Customer;
+import com.codegym.model.entity.employee.Employee;
+import com.codegym.model.entity.service.Service;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Contract {
+public class ContractDto {
 
     private Long id;
     private String startDate;

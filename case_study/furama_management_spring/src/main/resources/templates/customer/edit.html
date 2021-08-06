@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customer</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
+</head>
+<body>
+<div th:insert="~{/home::header-menu}"></div>
+<div class="container-fluid text-primary">
+    <h2>Update customer</h2>
+    <form action="/customer/edit" th:object="${customerDto}" method="post" class="w-50">
+        <input th:type="hidden" name="id" th:field="*{id}">
+        <div class="form-group">
+            <label for="code">Code</label>
+            <input type="text" class="form-control" name="code" id="code" th:field="*{code}"/>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" th:field="*{name}"/>
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select th:field="*{gender}" id="gender">
+                <option th:value="1" th:text="Male"></option>
+                <option th:value="0" th:text="Female"></option>
+                <option th:value="2" th:text="Unknow"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="birthday">Birthday</label>
+            <input type="date" class="form-control" name="birthday" id="birthday" th:field="*{birthday}"/>
+        </div>
+        <div class="form-group">
+            <label for="customerType">Customer Type</label>
+            <select th:field="*{customerType.id}" id="customerType">
+                <option th:each="c : ${customerTypeList}" th:value="${c.id}" th:text="${c.name}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="idCard">Id Card</label>
+            <input type="text" class="form-control" name="idCard" id="idCard" th:field="*{idCard}"/>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" name="phone" id="phone" th:field="*{phone}"/>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" name="email" id="email" th:field="*{email}"/>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" name="address" id="address" th:field="*{address}"/>
+        </div>
+        <div class="form-inline">
+            <button type="submit" class="btn btn-primary mr-4">Update</button>
+            <a class="btn btn-dark" href="/customer" role="button">Back</a>
+        </div>
+    </form>
+</div>
+
+<script src="/jquery/jquery-3.5.1.min.js"></script>
+<script src="/jquery/popper.min.js"></script>
+<script src="/bootstrap4/js/bootstrap.js"></script>
+</body>
+</html>

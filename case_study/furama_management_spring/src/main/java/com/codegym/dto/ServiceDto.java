@@ -1,5 +1,7 @@
-package com.codegym.dto.service;
+package com.codegym.dto;
 
+import com.codegym.model.entity.service.RentType;
+import com.codegym.model.entity.service.ServiceType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Service {
+public class ServiceDto {
 
     private Long id;
     private String code;
