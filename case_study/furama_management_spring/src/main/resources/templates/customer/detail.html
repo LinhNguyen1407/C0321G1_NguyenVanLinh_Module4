@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customer</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
+</head>
+<body>
+<div th:insert="~{/home::header-menu}"></div>
+
+<div class="container text-primary">
+    <h2 class="text-center text-success mt-2">Information Customer</h2>
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>No.</th>
+                <th>Information</th>
+                <th>Detail</th>
+            </tr>
+            </thead>
+            <tbody th:object="${customerDto}">
+            <tr>
+                <td>1</td>
+                <td>Code</td>
+                <td th:text="${customerDto.code}"></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Name</td>
+                <td th:text="${customerDto.name}"></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Birthday</td>
+                <td th:text="${customerDto.birthday}"></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Gender</td>
+                <td th:switch="${customerDto.gender}">
+                    <span th:case="1">Male</span>
+                    <span th:case="0">Female</span>
+                    <span th:case="2">Unknow</span>
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Customer Type</td>
+                <td th:text="${customerDto.customerType.name}"></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Id Card</td>
+                <td th:text="${customerDto.idCard}"></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Phone</td>
+                <td th:text="${customerDto.phone}"></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Email</td>
+                <td th:text="${customerDto.email}"></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Address</td>
+                <td th:text="${customerDto.address}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-inline">
+        <a class="btn btn-dark" href="/customer" role="button">Back</a>
+    </div>
+</div>
+
+<script src="/jquery/jquery-3.5.1.min.js"></script>
+<script src="/jquery/popper.min.js"></script>
+<script src="/bootstrap4/js/bootstrap.js"></script>
+</body>
+</html>

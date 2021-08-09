@@ -27,6 +27,7 @@ public class Customer {
     private String phone;
     private String email;
     private String address;
+    private int flagDel;
 
     @ManyToOne(targetEntity = CustomerType.class)
     @JoinColumn(name = "customer_type_id", referencedColumnName = "id")

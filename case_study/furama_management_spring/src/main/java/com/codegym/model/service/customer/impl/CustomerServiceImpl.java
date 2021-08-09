@@ -40,4 +40,20 @@ public class CustomerServiceImpl implements CustomerService {
     public void delete(Customer customer) {
         customerRepository.delete(customer);
     }
+
+    @Override
+    public Page<Customer> findAllByFlagDelEquals(int flagDel, Pageable pageable) {
+        return customerRepository.findAllByFlagDelEquals(flagDel, pageable);
+    }
+
+    @Override
+    public Page<Customer> findAllByNameContainingOrAddressContaining(String name, String address, Pageable pageable) {
+        return customerRepository.findAllByNameContainingOrAddressContaining(name, address, pageable);
+    }
+
+    @Override
+    public List<Customer> findAllByFlagDelEquals(int flagDel) {
+        return customerRepository.findAllByFlagDelEquals(flagDel);
+    }
+
 }

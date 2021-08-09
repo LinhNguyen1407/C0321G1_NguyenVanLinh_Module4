@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Customer</title>
+    <title>Employee</title>
     <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
 </head>
 <body>
 <div th:insert="~{/home::header-menu}"></div>
 
 <div class="container-fluid text-primary">
-    <h2 class="mt-2">Customer List</h2>
+    <h2 class="mt-2">Employee List</h2>
     <div class="form-row mb-3">
-        <div class="col-md-4">
-            <a class="btn btn-success" th:href="@{/customer/create}" role="button">Create new customer</a>
-            <a class="btn btn-success ml-2" th:href="@{/customer/use-service}" role="button">List customer use service</a>
+        <div class="col-md-2">
+            <a class="btn btn-success" th:href="@{/employee/create}" role="button">Create new employee</a>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-7">
             <th:block th:if="${message}">
                 <strong class="text-primary" th:text="${message}"></strong>
             </th:block>
         </div>
         <div class="col-md-3">
-            <form class="form-inline" action="/customer/search">
+            <form class="form-inline" action="/employee">
                 <input style="width: 290px" class="form-control mr-sm-2" type="search" name="keyword" placeholder="Search" aria-label="Search">
-                <button style="width: 85px" class="btn btn-outline-success my-2 my-sm-0 font-weight-bold" type="submit">Search</button>
+                <button style="width: 85px;" class="btn btn-outline-success my-2 my-sm-0 font-weight-bold" type="submit">Search</button>
             </form>
         </div>
     </div>
@@ -34,12 +33,10 @@
             <thead class="thead-dark">
             <tr>
                 <th>No.</th>
-                <th>Code</th>
                 <th>Name</th>
                 <th>Birthday</th>
-                <th>Gender</th>
-                <th>Customer Type</th>
-                <th>Id Card</th>
+                <th>Position</th>
+                <th>Division</th>
                 <th>Phone</th>
                 <th>Email</th>
                 <th>Address</th>
@@ -49,24 +46,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="customer, customerStat: ${customerList}">
-                <td th:text="${customerStat.index + 1}"></td>
-                <td th:text="${customer.code}"></td>
-                <td th:text="${customer.name}"></td>
-                <td th:text="${customer.birthday}"></td>
-                <td th:switch="${customer.gender}">
-                    <span th:case="1">Male</span>
-                    <span th:case="0">Female</span>
-                    <span th:case="2">Unknow</span>
-                </td>
-                <td th:text="${customer.customerType.name}"></td>
-                <td th:text="${customer.idCard}"></td>
-                <td th:text="${customer.phone}"></td>
-                <td th:text="${customer.email}"></td>
-                <td th:text="${customer.address}"></td>
-                <td><a class="btn btn-success" th:href="@{/customer/detail/__${customer.id}__}" role="button">Detail</a></td>
-                <td><a class="btn btn-warning" th:href="@{/customer/edit/__${customer.id}__}" role="button">Edit</a></td>
-                <td><a class="btn btn-danger" th:onclick="|deleteCustomer(${customer.id})|" data-toggle="modal" data-target="#modalDel">Delete</a></td>
+            <tr th:each="e, stat: ${employeeList}">
+                <td th:text="${stat.index + 1}"></td>
+                <td th:text="${e.name}"></td>
+                <td th:text="${e.birthday}"></td>
+                <td th:text="${e.position.name}"></td>
+                <td th:text="${e.division.name}"></td>
+                <td th:text="${e.phone}"></td>
+                <td th:text="${e.email}"></td>
+                <td th:text="${e.address}"></td>
+                <td><a class="btn btn-success" th:href="@{/employee/detail/__${e.id}__}" role="button">Detail</a></td>
+                <td><a class="btn btn-warning" th:href="@{/employee/edit/__${e.id}__}" role="button">Edit</a></td>
+                <td><a class="btn btn-danger" th:onclick="|deleteEmployee(${e.id})|" data-toggle="modal" data-target="#modalDel">Delete</a></td>
             </tr>
             </tbody>
         </table>
@@ -75,14 +66,14 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{'/customer'(page=${customerList.number - 1})}" th:if="${customerList.hasPrevious()}">
+                <a class="page-link" th:href="@{'/employee'(page=${employeeList.number - 1}, keyword=${keywordValue})}" th:if="${employeeList.hasPrevious()}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li class="page-item"><a class="page-link" th:href="@{'/customer'(page=0)}">1</a></li>
-            <li class="page-item"><a class="page-link" th:href="@{'/customer'(page=1)}">2</a></li>
+            <li class="page-item"><a class="page-link" th:href="@{'/employee'(page=0, keyword=${keywordValue})}">1</a></li>
+            <li class="page-item"><a class="page-link" th:href="@{'/employee'(page=1, keyword=${keywordValue})}">2</a></li>
             <li class="page-item">
-                <a class="page-link" th:href="@{'/customer'(page=${customerList.number + 1})}" th:if="${customerList.hasNext()}">
+                <a class="page-link" th:href="@{'/employee'(page=${employeeList.number + 1} , keyword=${keywordValue})}" th:if="${employeeList.hasNext()}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -99,8 +90,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="/customer/delete" method="post">
-                <input type="hidden" name="id" id="customerDel"/>
+            <form action="/employee/delete" method="post">
+                <input type="hidden" name="id" id="employeeDel"/>
                 <div class="modal-body">Are you sure to delete ?
                 </div>
                 <div class="modal-footer">
@@ -117,8 +108,8 @@
 <script src="/bootstrap4/js/bootstrap.js"></script>
 
 <script>
-    function deleteCustomer(id) {
-        document.getElementById("customerDel").value = id;
+    function deleteEmployee(id) {
+        document.getElementById("employeeDel").value = id;
     }
 
 </script>

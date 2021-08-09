@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customer</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
+</head>
+<body>
+<div th:insert="~{/home::header-menu}"></div>
+<div class="container text-primary">
+    <h2 class="text-center text-success mt-3">Create new service</h2>
+    <form action="/service/create" th:object="${serviceDto}" method="post">
+        <div class="form-group">
+            <label for="code">Code</label>
+            <input type="text" class="form-control" name="code" id="code" th:field="*{code}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></div>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" th:field="*{name}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div class="form-group">
+            <label for="area">Area</label>
+            <input type="text" class="form-control" name="area" id="area" th:field="*{area}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></div>
+        </div>
+        <div class="form-group">
+            <label for="numFloors">Number of Floors</label>
+            <input type="text" class="form-control" name="numFloors" id="numFloors" th:field="*{numFloors}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('numFloors')}" th:errors="*{numFloors}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="maxPeople">Maximum People</label>
+            <input type="text" class="form-control" name="maxPeople" id="maxPeople" th:field="*{maxPeople}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('maxPeople')}" th:errors="*{maxPeople}"></div>
+        </div>
+        <div class="form-group">
+            <label for="poorArea">Poor Area</label>
+            <input type="text" class="form-control" name="poorArea" id="poorArea" th:field="*{poorArea}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('poorArea')}" th:errors="*{poorArea}"></div>
+        </div>
+        <div class="form-group">
+            <label for="standardRoom">Standard Room</label>
+            <input type="text" class="form-control" name="standardRoom" id="standardRoom" th:field="*{standardRoom}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('standardRoom')}" th:errors="*{standardRoom}"></div>
+        </div>
+        <div class="form-group">
+            <label for="cost">Cost</label>
+            <input type="text" class="form-control" name="cost" id="cost" th:field="*{cost}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></div>
+        </div>
+        <div class="form-group">
+            <label for="descOthers">description Others</label>
+            <input type="text" class="form-control" name="descOthers" id="descOthers" th:field="*{descOthers}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('descOthers')}" th:errors="*{descOthers}"></div>
+        </div>
+        <div class="form-group">
+            <label for="serviceType">Service Type</label>
+            <select class="custom-select" th:field="*{serviceType.id}" id="serviceType">
+                <option th:each="s : ${serviceTypeList}" th:value="${s.id}" th:text="${s.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="rentType">Rent Type</label>
+            <select class="custom-select" th:field="*{rentType.id}" id="rentType">
+                <option th:each="r : ${rentTypeList}" th:value="${r.id}" th:text="${r.name}"></option>
+            </select>
+        </div>
+        <div class="form-inline">
+            <button type="submit" class="btn btn-primary mr-4">Create</button>
+            <a class="btn btn-dark" href="/service" role="button">Back</a>
+        </div>
+    </form>
+</div>
+
+<script src="/jquery/jquery-3.5.1.min.js"></script>
+<script src="/jquery/popper.min.js"></script>
+<script src="/bootstrap4/js/bootstrap.js"></script>
+</body>
+</html>

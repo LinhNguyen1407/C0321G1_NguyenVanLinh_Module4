@@ -8,10 +8,11 @@
 </head>
 <body>
 <div th:insert="~{/home::header-menu}"></div>
-<div class="container-fluid text-primary">
-    <h2>Update customer</h2>
-    <form action="/customer/edit" th:object="${customerDto}" method="post" class="w-50">
+<div class="container text-primary">
+    <h2 class="text-center text-success mt-3">Update customer</h2>
+    <form action="/customer/edit" th:object="${customerDto}" method="post">
         <input th:type="hidden" name="id" th:field="*{id}">
+        <input th:type="hidden" name="flagDel" th:field="*{flagDel}">
         <div class="form-group">
             <label for="code">Code</label>
             <input type="text" class="form-control" name="code" id="code" th:field="*{code}"/>
@@ -38,7 +39,6 @@
                 <option th:each="c : ${customerTypeList}" th:value="${c.id}" th:text="${c.name}"></option>
             </select>
         </div>
-
         <div class="form-group">
             <label for="idCard">Id Card</label>
             <input type="text" class="form-control" name="idCard" id="idCard" th:field="*{idCard}"/>

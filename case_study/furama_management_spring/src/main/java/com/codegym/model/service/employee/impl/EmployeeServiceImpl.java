@@ -4,6 +4,8 @@ import com.codegym.model.entity.employee.Employee;
 import com.codegym.model.repository.employee.EmployeeRepository;
 import com.codegym.model.service.employee.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -32,5 +34,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void delete(Employee employee) {
         employeeRepository.delete(employee);
+    }
+
+    @Override
+    public Page<Employee> findAll(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
     }
 }

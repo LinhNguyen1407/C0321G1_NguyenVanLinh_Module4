@@ -19,4 +19,9 @@ public interface CustomerService {
 
     void delete(Customer customer);
 
+    Page<Customer> findAllByFlagDelEquals (int flagDel, Pageable pageable);
+
+    Page<Customer> findAllByNameContainingOrAddressContaining (String name, String address, Pageable pageable);
+
+    List<Customer> findAllByFlagDelEquals(int flagDel);
 }

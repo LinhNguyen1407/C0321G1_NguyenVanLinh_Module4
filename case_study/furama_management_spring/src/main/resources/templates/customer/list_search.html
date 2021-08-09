@@ -12,18 +12,17 @@
 <div class="container-fluid text-primary">
     <h2 class="mt-2">Customer List</h2>
     <div class="form-row mb-3">
-        <div class="col-md-4">
+        <div class="col-md-2">
             <a class="btn btn-success" th:href="@{/customer/create}" role="button">Create new customer</a>
-            <a class="btn btn-success ml-2" th:href="@{/customer/use-service}" role="button">List customer use service</a>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-7">
             <th:block th:if="${message}">
                 <strong class="text-primary" th:text="${message}"></strong>
             </th:block>
         </div>
         <div class="col-md-3">
             <form class="form-inline" action="/customer/search">
-                <input style="width: 290px" class="form-control mr-sm-2" type="search" name="keyword" placeholder="Search" aria-label="Search">
+                <input style="width: 290px" class="form-control mr-sm-2" type="search" name="keyword" th:value="${keywordValue}" placeholder="Search" aria-label="Search">
                 <button style="width: 85px" class="btn btn-outline-success my-2 my-sm-0 font-weight-bold" type="submit">Search</button>
             </form>
         </div>
@@ -75,14 +74,14 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{'/customer'(page=${customerList.number - 1})}" th:if="${customerList.hasPrevious()}">
+                <a class="page-link" th:href="@{'/customer/search'(page=${customerList.number - 1}, keyword=${keywordValue})}" th:if="${customerList.hasPrevious()}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li class="page-item"><a class="page-link" th:href="@{'/customer'(page=0)}">1</a></li>
-            <li class="page-item"><a class="page-link" th:href="@{'/customer'(page=1)}">2</a></li>
+            <li class="page-item"><a class="page-link" th:href="@{'/customer/search'(page=0, keyword=${keywordValue})}">1</a></li>
+            <li class="page-item"><a class="page-link" th:href="@{'/customer/search'(page=1, keyword=${keywordValue})}">2</a></li>
             <li class="page-item">
-                <a class="page-link" th:href="@{'/customer'(page=${customerList.number + 1})}" th:if="${customerList.hasNext()}">
+                <a class="page-link" th:href="@{'/customer/search'(page=${customerList.number + 1} , keyword=${keywordValue})}" th:if="${customerList.hasNext()}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

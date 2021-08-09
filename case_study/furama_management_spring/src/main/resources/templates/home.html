@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,33 +10,42 @@
 <body>
 <div th:fragment="header-menu">
     <nav class="navbar navbar-light bg-light clearfix border-bottom border-dark">
-        <img class="float-left" src="/img/logo.jpg" width="60" height="60" alt="">
-        <h2 class="text-center mt-2">WELCOME FURAMA RESORT DANANG</h2>
+        <img class="float-left" src="/img/logo.png" width="60" height="60" alt="">
+        <h2 class="text-center text-danger mt-2" style="margin-left: 380px; margin-right: 300px">WELCOME FURAMA RESORT DANANG</h2>
+        <div sec:authorize="isAuthenticated()">
+            <h5 style="color: blueviolet">Welcome, <strong sec:authentication="principal.username"></strong></h5>
+        </div>
     </nav>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-dark">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/"><strong>Home</strong>
+                <li class="nav-item active mr-5">
+                    <a style="font-size: 18px" class="nav-link text-primary" href="/"><strong>Home</strong>
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/employee"><strong>Employee</strong></a>
+                <li class="nav-item mr-5">
+                    <a style="font-size: 18px" class="nav-link text-primary" href="/employee"><strong>Employee</strong></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/customer"><strong>Customer</strong></a>
+                <li class="nav-item mr-5">
+                    <a style="font-size: 18px" class="nav-link text-primary" href="/customer"><strong>Customer</strong></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/service"><strong>Service</strong></a>
+                <li class="nav-item mr-5">
+                    <a style="font-size: 18px" class="nav-link text-primary" href="/service"><strong>Service</strong></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contract"><strong>Contract</strong></a>
+                <li class="nav-item mr-5">
+                    <a style="font-size: 18px" class="nav-link text-primary" href="/contract"><strong>Contract</strong></a>
+                </li>
+                <li class="nav-item mr-5">
+                    <a style="font-size: 18px" class="nav-link text-primary" href="/contract-detail"><strong>Contract Detail</strong></a>
                 </li>
             </ul>
         </div>
     </nav>
+</div>
+<div>
+    <img src="/img/furama_home.png" style="width: 100%; height: auto">
 </div>
 </body>
 </html>
