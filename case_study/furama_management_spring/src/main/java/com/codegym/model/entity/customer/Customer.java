@@ -21,7 +21,10 @@ public class Customer {
     private Long id;
     private String code;
     private String name;
+
+    @Column(name = "birthday", columnDefinition = "date")
     private String birthday;
+
     private String gender;
     private String idCard;
     private String phone;

@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Setter
 @Getter
@@ -20,37 +17,37 @@ public class ServiceDto {
 
     private Long id;
 
-    @NotEmpty(message = "Data must be not emmpty")
+    @NotEmpty(message = "Data must be not empty")
     @Pattern(regexp = "DV-\\d{4}",message = "Customer code must have format KH-XXXX")
     private String code;
 
-    @NotEmpty(message = "Data must be not emmpty")
+    @NotEmpty(message = "Data must be not empty")
     private String name;
 
-    @NotNull(message = "Data must be not emmpty")
-    @Min(1)
+    @NotNull(message = "Data must be not empty")
+    @Positive(message = "Area must be greater than 0")
     private Long area;
 
-    @NotNull(message = "Data must be not emmpty")
-    @Min(1)
+    @NotNull(message = "Data must be not empty")
+    @Positive(message = "Number of floors must be greater than 0")
     private Long numFloors;
 
-    @NotNull(message = "Data must be not emmpty")
-    @Min(1)
+    @NotNull(message = "Data must be not empty")
+    @Positive(message = "Maximum people must be greater than 0")
     private Long maxPeople;
 
-    @NotNull(message = "Data must be not emmpty")
-    @Min(1)
+    @NotNull(message = "Data must be not empty")
+    @Positive(message = "Cost must be greater than 0")
     private Long cost;
 
-    @NotEmpty(message = "Data must be not emmpty")
+    @NotEmpty(message = "Data must be not empty")
     private String standardRoom;
 
-    @NotEmpty(message = "Data must be not emmpty")
+    @NotEmpty(message = "Data must be not empty")
     private String descOthers;
 
-    @NotNull(message = "Data must be not emmpty")
-    @Min(1)
+    @NotNull(message = "Data must be not empty")
+    @Positive(message = "Poor area must be greater than 0")
     private Long poorArea;
 
     private RentType rentType;

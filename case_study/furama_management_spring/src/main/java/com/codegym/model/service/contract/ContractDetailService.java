@@ -1,5 +1,6 @@
 package com.codegym.model.service.contract;
 
+import com.codegym.model.entity.contract.Contract;
 import com.codegym.model.entity.contract.ContractDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +16,8 @@ public interface ContractDetailService {
     Page<ContractDetail> findAll(Pageable pageable);
 
     Page<ContractDetail> findCustomerByStatus(Pageable pageable);
+
+    List<ContractDetail> findCustomerByStatus();
+
+    void calculateTotalMoney();
 }

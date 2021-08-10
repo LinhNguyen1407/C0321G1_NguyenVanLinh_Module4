@@ -26,6 +26,7 @@ public class Employee {
     private String phone;
     private String email;
     private String address;
+    private int flagDel;
 
     @ManyToOne(targetEntity = Position.class)
     @JoinColumn(name = "position_id", referencedColumnName = "id")

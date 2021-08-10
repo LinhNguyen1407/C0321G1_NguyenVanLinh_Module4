@@ -21,6 +21,7 @@
                 <th>Service</th>
                 <th>Contract Detail ID</th>
                 <th>Attach Service</th>
+                <th>Total Money</th>
             </tr>
             </thead>
             <tbody>
@@ -31,6 +32,7 @@
                 <td th:text="${c.contract.service.name}"></td>
                 <td th:text="${c.id}"></td>
                 <td th:text="${c.attachService.name}"></td>
+                <td th:text="${c.contract.totalMoney}"></td>
             </tr>
             </tbody>
         </table>

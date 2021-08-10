@@ -47,7 +47,7 @@ public class EmployeeController {
         }
 
         ModelAndView modelAndView = new ModelAndView("/employee/list");
-        Page<Employee> employeeList = employeeService.findAll(pageable);
+        Page<Employee> employeeList = employeeService.findAllByFlagDelEquals(0, pageable);
         modelAndView.addObject("employeeList", employeeList);
         return modelAndView;
     }
@@ -71,6 +71,7 @@ public class EmployeeController {
             return "/employee/create";
         } else {
             Employee employee = new Employee();
+            employeeDto.setFlagDel(0);
             BeanUtils.copyProperties(employeeDto, employee);
             employeeService.save(employee);
             redirectAttributes.addFlashAttribute("message", "Create new employee " + employee.getName() + " successfull");
@@ -101,20 +102,37 @@ public class EmployeeController {
     }
 
     @PostMapping("/edit")
-    public String updateEmployee(@ModelAttribute EmployeeDto employeeDto,
-                                 RedirectAttributes redirectAttributes) {
-        Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeDto, employee);
-        employeeService.save(employee);
-        redirectAttributes.addFlashAttribute("message", "Update employee " + employee.getName() + " successfull");
-        return "redirect:/employee";
+    public String updateEmployee(@Validated @ModelAttribute EmployeeDto employeeDto,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes,
+                                 Model model) {
+        if(bindingResult.hasFieldErrors()){
+            initCreateEmployee(model);
+            return "/employee/edit";
+        } else {
+            Employee employee = new Employee();
+            BeanUtils.copyProperties(employeeDto, employee);
+            employeeService.save(employee);
+            redirectAttributes.addFlashAttribute("message", "Update employee " + employee.getName() + " successfull");
+            return "redirect:/employee";
+        }
     }
+
+//    @PostMapping("/delete")
+//    public String deleteEmployee(@RequestParam Long id,
+//                                 RedirectAttributes redirectAttributes){
+//        Optional<Employee> employee = employeeService.findById(id);
+//        employeeService.delete(employee.get());
+//        redirectAttributes.addFlashAttribute("message", "Delete employee " + employee.get().getName() + " successfull");
+//        return "redirect:/employee";
+//    }
 
     @PostMapping("/delete")
     public String deleteEmployee(@RequestParam Long id,
                                  RedirectAttributes redirectAttributes){
         Optional<Employee> employee = employeeService.findById(id);
-        employeeService.delete(employee.get());
+        employee.get().setFlagDel(1);
+        employeeService.save(employee.get());
         redirectAttributes.addFlashAttribute("message", "Delete employee " + employee.get().getName() + " successfull");
         return "redirect:/employee";
     }

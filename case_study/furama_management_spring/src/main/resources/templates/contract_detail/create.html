@@ -26,6 +26,7 @@
         <div class="form-group">
             <label for="quantity">Quantity</label>
             <input type="text" class="form-control" name="quantity" id="quantity" th:field="*{quantity}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
         </div>
         <div class="form-inline">
             <button type="submit" class="btn btn-primary mr-4">Create</button>

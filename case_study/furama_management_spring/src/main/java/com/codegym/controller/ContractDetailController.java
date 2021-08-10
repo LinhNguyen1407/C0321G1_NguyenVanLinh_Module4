@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +44,7 @@ public class ContractDetailController {
         return modelAndView;
     }
 
-    @GetMapping("//contract-detail/create")
+    @GetMapping("/contract-detail/create")
     public ModelAndView showCreateForm(Model model) {
         ModelAndView modelAndView = new ModelAndView("/contract_detail/create");
         modelAndView.addObject("contractDetailDto", new ContractDetailDto());
@@ -58,22 +60,28 @@ public class ContractDetailController {
     }
 
     @PostMapping("/contract-detail/create")
-    public String createContractDetail(@ModelAttribute ContractDetailDto contractDetailDto,
-                                 RedirectAttributes redirectAttributes) {
-        ContractDetail contractDetail = new ContractDetail();
-        BeanUtils.copyProperties(contractDetailDto, contractDetail);
-
-        contractDetailService.save(contractDetail);
-        redirectAttributes.addFlashAttribute("message", "Create new contract detail with ID " + contractDetail.getId() + " successfull");
-        return "redirect:/contract-detail";
+    public String createContractDetail(@Validated @ModelAttribute ContractDetailDto contractDetailDto,
+                                       BindingResult bindingResult,
+                                       RedirectAttributes redirectAttributes,
+                                       Model model) {
+        if(bindingResult.hasFieldErrors()) {
+            initCreateContractDetail(model);
+            return "/contract_detail/create";
+        } else {
+            ContractDetail contractDetail = new ContractDetail();
+            BeanUtils.copyProperties(contractDetailDto, contractDetail);
+            contractDetailService.save(contractDetail);
+            redirectAttributes.addFlashAttribute("message", "Create new contract detail with ID " + contractDetail.getId() + " successfull");
+            return "redirect:/contract-detail";
+        }
     }
 
     @GetMapping("/customer/use-service")
     public ModelAndView showListCustomerUsedService(@PageableDefault(value = 2) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("/customer/use_service");
+        contractDetailService.calculateTotalMoney();
         Page<ContractDetail> contractDetails = contractDetailService.findCustomerByStatus(pageable);
         modelAndView.addObject("contractDetails", contractDetails);
         return modelAndView;
     }
-
 }

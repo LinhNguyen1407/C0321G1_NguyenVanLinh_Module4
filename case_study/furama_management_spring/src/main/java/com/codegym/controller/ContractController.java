@@ -16,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,14 +60,22 @@ public class ContractController {
     }
 
     @PostMapping("/create")
-    public String createEmployee(@ModelAttribute ContractDto contractDto,
-                                 RedirectAttributes redirectAttributes) {
-        Contract contract = new Contract();
-        BeanUtils.copyProperties(contractDto, contract);
+    public String createContract(@Validated @ModelAttribute ContractDto contractDto,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes,
+                                 Model model) {
+        new ContractDto().validate(contractDto, bindingResult);
+        if(bindingResult.hasFieldErrors()) {
+            initCreateContract(model);
+            return "/contract/create";
+        } else {
+            Contract contract = new Contract();
+            BeanUtils.copyProperties(contractDto, contract);
 
-        contractService.save(contract);
-        redirectAttributes.addFlashAttribute("message", "Create new contract with ID " + contract.getId() + " successfull");
-        return "redirect:/contract";
+            contractService.save(contract);
+            redirectAttributes.addFlashAttribute("message", "Create new contract with ID " + contract.getId() + " successfull");
+            return "redirect:/contract";
+        }
     }
 
     private void initCreateContract(Model model) {
@@ -73,7 +83,7 @@ public class ContractController {
         model.addAttribute("customerList", customerList);
         List<Service> serviceList = serviceService.findAll();
         model.addAttribute("serviceList", serviceList);
-        List<Employee> employeeList = employeeService.findAll();
+        List<Employee> employeeList = employeeService.findAllByFlagDelEquals(0);
         model.addAttribute("employeeList", employeeList);
     }
 

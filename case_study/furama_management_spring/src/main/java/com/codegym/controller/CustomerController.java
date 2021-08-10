@@ -100,13 +100,20 @@ public class CustomerController {
     }
 
     @PostMapping("/edit")
-    public String updateCustomer(@ModelAttribute CustomerDto customerDto,
-                                 RedirectAttributes redirectAttributes) {
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto, customer);
-        customerService.save(customer);
-        redirectAttributes.addFlashAttribute("message", "Update customer " + customer.getName() + " successfull");
-        return "redirect:/customer";
+    public String updateCustomer(@Validated @ModelAttribute CustomerDto customerDto,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes,
+                                 Model model) {
+        if(bindingResult.hasFieldErrors()) {
+            initCreateCustomer(model);
+            return "/customer/edit";
+        } else {
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto, customer);
+            customerService.save(customer);
+            redirectAttributes.addFlashAttribute("message", "Update customer " + customer.getName() + " successfull");
+            return "redirect:/customer";
+        }
     }
 
 //    @PostMapping("/delete")

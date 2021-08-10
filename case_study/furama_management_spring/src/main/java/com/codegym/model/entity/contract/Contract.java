@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -21,8 +22,13 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "start_date", columnDefinition = "date")
     private String startDate;
+
+    @Column(name = "end_date", columnDefinition = "date")
     private String endDate;
+
     private Long deposit;
     private Long totalMoney;
 

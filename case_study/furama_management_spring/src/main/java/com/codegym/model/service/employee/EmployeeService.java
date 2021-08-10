@@ -19,4 +19,8 @@ public interface EmployeeService {
 
     Page<Employee> findAll(Pageable pageable);
 
+    List<Employee> findAllByFlagDelEquals(int flagDel);
+
+    Page<Employee> findAllByFlagDelEquals (int flagDel, Pageable pageable);
+
 }

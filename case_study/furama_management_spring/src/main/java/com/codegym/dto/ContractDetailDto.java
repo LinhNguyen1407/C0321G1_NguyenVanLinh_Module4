@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Setter
 @Getter
@@ -14,7 +17,11 @@ import lombok.Setter;
 public class ContractDetailDto {
 
     private Long id;
+
+    @NotNull(message = "Data must be not empty")
+    @Positive(message = "Quantity must be greater than 0")
     private Long quantity;
+
     private Contract contract;
     private AttachService attachService;
 }

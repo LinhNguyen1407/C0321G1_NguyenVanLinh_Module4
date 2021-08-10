@@ -26,19 +26,22 @@
         <div class="form-group">
             <label for="startDate">Start Date</label>
             <input type="date" class="form-control" name="startDate" id="startDate" th:field="*{startDate}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
         </div>
         <div class="form-group">
             <label for="endDate">End Date</label>
             <input type="date" class="form-control" name="endDate" id="endDate" th:field="*{endDate}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
         </div>
         <div class="form-group">
             <label for="deposit">Deposit</label>
             <input type="text" class="form-control" name="deposit" id="deposit" th:field="*{deposit}"/>
+            <div style="color: red" th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></div>
         </div>
-        <div class="form-group">
-            <label for="totalMoney">Total Money</label>
-            <input type="text" class="form-control" name="totalMoney" id="totalMoney" th:field="*{totalMoney}"/>
-        </div>
+<!--        <div class="form-group">-->
+<!--            <label for="totalMoney">Total Money</label>-->
+<!--            <input type="text" class="form-control" name="totalMoney" id="totalMoney" th:field="*{totalMoney}"/>-->
+<!--        </div>-->
         <div class="form-group">
             <label for="employee">Employee</label>
             <select class="custom-select" th:field="*{employee.id}" id="employee">

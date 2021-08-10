@@ -40,4 +40,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Page<Employee> findAll(Pageable pageable) {
         return employeeRepository.findAll(pageable);
     }
+
+    @Override
+    public List<Employee> findAllByFlagDelEquals(int flagDel) {
+        return employeeRepository.findAllByFlagDelEquals(flagDel);
+    }
+
+    @Override
+    public Page<Employee> findAllByFlagDelEquals(int flagDel, Pageable pageable) {
+        return employeeRepository.findAllByFlagDelEquals(flagDel, pageable);
+    }
 }
