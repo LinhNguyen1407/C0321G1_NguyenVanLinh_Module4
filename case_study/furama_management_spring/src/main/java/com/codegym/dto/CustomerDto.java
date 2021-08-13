@@ -5,20 +5,27 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDto {
+public class CustomerDto implements Validator {
 
     private Long id;
 
-    @NotEmpty(message = "Data must be not empty")
-    @Pattern(regexp = "KH-\\d{4}",message = "Customer code must have format KH-XXXX")
+    //    @NotEmpty(message = "Data must be not empty")
+//    @Pattern(regexp = "KH-\\d{4}",message = "Customer code must have format KH-XXXX")
     private String code;
 
     @NotEmpty(message = "Data must be not empty")
@@ -47,4 +54,31 @@ public class CustomerDto {
 
     private int flagDel;
     private CustomerType customerType;
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        CustomerDto customerDto = (CustomerDto) target;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar period = Calendar.getInstance();
+        Date date = null;
+        try {
+            date = dateFormat.parse(customerDto.getBirthday());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (date != null) {
+            period.setTime(date);
+        }
+        period.add(Calendar.DATE, 18 * 365);
+        if (period.getTimeInMillis() - System.currentTimeMillis() > 0) {
+            errors.rejectValue("birthday", "birthday", "Age must be not less than 18");
+        }
+    }
 }

@@ -21,11 +21,11 @@ public class ContractDetail {
     private Long quantity;
 
     @ManyToOne(targetEntity = Contract.class)
-    @JoinColumn(name= "contract_id", referencedColumnName = "id")
+    @JoinColumn(name = "contract_id", referencedColumnName = "id")
     private Contract contract;
 
     @ManyToOne(targetEntity = AttachService.class)
-    @JoinColumn(name= "attach_service_id", referencedColumnName = "id")
+    @JoinColumn(name = "attach_service_id", referencedColumnName = "id")
     private AttachService attachService;
 
 }

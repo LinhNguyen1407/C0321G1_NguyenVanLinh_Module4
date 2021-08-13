@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ContractDetailService {
 
@@ -15,9 +16,8 @@ public interface ContractDetailService {
 
     Page<ContractDetail> findAll(Pageable pageable);
 
+    Optional<ContractDetail> findById(Long id);
+
     Page<ContractDetail> findCustomerByStatus(Pageable pageable);
 
-    List<ContractDetail> findCustomerByStatus();
-
-    void calculateTotalMoney();
 }

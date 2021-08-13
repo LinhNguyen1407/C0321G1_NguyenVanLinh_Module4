@@ -39,16 +39,31 @@ public class EmployeeController {
     private DivisionService divisionService;
 
     @GetMapping
-    public ModelAndView showListEmployees(@PageableDefault(value = 2) Pageable pageable,
-                                          @RequestParam Optional<String> keyword) {
-        String keywordValue = "";
-        if(keyword.isPresent()){
-            keywordValue = keyword.get();
+    public ModelAndView showListEmployees(@PageableDefault(value = 4) Pageable pageable) {
+        ModelAndView modelAndView = new ModelAndView("/employee/list");
+        Page<Employee> employeeList = employeeService.findAllByFlagDel(pageable);
+        modelAndView.addObject("employeeList", employeeList);
+        return modelAndView;
+    }
+
+    @GetMapping("/search")
+    public ModelAndView showListSearchEmployees(@PageableDefault(value = 4) Pageable pageable,
+                                                @RequestParam Optional<String> name,
+                                                @RequestParam Optional<String> idCard) {
+        String nameValue = "";
+        String idCardValue = "";
+        if (name.isPresent()) {
+            nameValue = name.get();
+        }
+        if (idCard.isPresent()) {
+            idCardValue = idCard.get();
         }
 
-        ModelAndView modelAndView = new ModelAndView("/employee/list");
-        Page<Employee> employeeList = employeeService.findAllByFlagDelEquals(0, pageable);
+        ModelAndView modelAndView = new ModelAndView("/employee/list_search");
+        Page<Employee> employeeList = employeeService.searchByNameAndIdCard(nameValue, idCardValue, pageable);
         modelAndView.addObject("employeeList", employeeList);
+        modelAndView.addObject("nameValue", nameValue);
+        modelAndView.addObject("idCardValue", idCardValue);
         return modelAndView;
     }
 
@@ -66,7 +81,8 @@ public class EmployeeController {
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes,
                                  Model model) {
-        if(bindingResult.hasFieldErrors()){
+        new EmployeeDto().validate(employeeDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
             initCreateEmployee(model);
             return "/employee/create";
         } else {
@@ -106,7 +122,8 @@ public class EmployeeController {
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes,
                                  Model model) {
-        if(bindingResult.hasFieldErrors()){
+        new EmployeeDto().validate(employeeDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
             initCreateEmployee(model);
             return "/employee/edit";
         } else {
@@ -129,7 +146,7 @@ public class EmployeeController {
 
     @PostMapping("/delete")
     public String deleteEmployee(@RequestParam Long id,
-                                 RedirectAttributes redirectAttributes){
+                                 RedirectAttributes redirectAttributes) {
         Optional<Employee> employee = employeeService.findById(id);
         employee.get().setFlagDel(1);
         employeeService.save(employee.get());

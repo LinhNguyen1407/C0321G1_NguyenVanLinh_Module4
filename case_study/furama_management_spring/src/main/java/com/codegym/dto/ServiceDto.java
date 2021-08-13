@@ -18,7 +18,7 @@ public class ServiceDto {
     private Long id;
 
     @NotEmpty(message = "Data must be not empty")
-    @Pattern(regexp = "DV-\\d{4}",message = "Customer code must have format KH-XXXX")
+    @Pattern(regexp = "DV-\\d{4}", message = "Customer code must have format KH-XXXX")
     private String code;
 
     @NotEmpty(message = "Data must be not empty")

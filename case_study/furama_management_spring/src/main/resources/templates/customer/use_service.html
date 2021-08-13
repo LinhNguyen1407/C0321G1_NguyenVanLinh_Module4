@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Customer</title>
     <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
 </head>
@@ -21,7 +21,7 @@
                 <th>Service</th>
                 <th>Contract Detail ID</th>
                 <th>Attach Service</th>
-                <th>Total Money</th>
+                <!--                <th>Total Money</th>-->
             </tr>
             </thead>
             <tbody>
@@ -32,7 +32,7 @@
                 <td th:text="${c.contract.service.name}"></td>
                 <td th:text="${c.id}"></td>
                 <td th:text="${c.attachService.name}"></td>
-                <td th:text="${c.contract.totalMoney}"></td>
+                <!--                <td th:text="${c.contract.totalMoney}"></td>-->
             </tr>
             </tbody>
         </table>
@@ -41,14 +41,16 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{'/customer/use-service'(page=${contractDetails.number - 1})}" th:if="${contractDetails.hasPrevious()}">
+                <a class="page-link" th:href="@{'/customer/use-service'(page=${contractDetails.number - 1})}"
+                   th:if="${contractDetails.hasPrevious()}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item"><a class="page-link" th:href="@{'/customer/use-service'(page=0)}">1</a></li>
             <li class="page-item"><a class="page-link" th:href="@{'/customer/use-service'(page=1)}">2</a></li>
             <li class="page-item">
-                <a class="page-link" th:href="@{'/customer/use-service'(page=${contractDetails.number + 1})}" th:if="${contractDetails.hasNext()}">
+                <a class="page-link" th:href="@{'/customer/use-service'(page=${contractDetails.number + 1})}"
+                   th:if="${contractDetails.hasNext()}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Service</title>
     <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
 </head>
@@ -55,14 +55,16 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{'/service'(page=${serviceList.number - 1})}" th:if="${serviceList.hasPrevious()}">
+                <a class="page-link" th:href="@{'/service'(page=${serviceList.number - 1})}"
+                   th:if="${serviceList.hasPrevious()}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item"><a class="page-link" th:href="@{'/service'(page=0)}">1</a></li>
             <li class="page-item"><a class="page-link" th:href="@{'/service'(page=1)}">2</a></li>
             <li class="page-item">
-                <a class="page-link" th:href="@{'/service'(page=${serviceList.number + 1})}" th:if="${serviceList.hasNext()}">
+                <a class="page-link" th:href="@{'/service'(page=${serviceList.number + 1})}"
+                   th:if="${serviceList.hasNext()}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

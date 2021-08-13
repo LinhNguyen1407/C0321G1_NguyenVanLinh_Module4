@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContractDetailServiceImpl implements ContractDetailService {
@@ -38,29 +39,13 @@ public class ContractDetailServiceImpl implements ContractDetailService {
     }
 
     @Override
+    public Optional<ContractDetail> findById(Long id) {
+        return contractDetailRepository.findById(id);
+    }
+
+    @Override
     public Page<ContractDetail> findCustomerByStatus(Pageable pageable) {
         return contractDetailRepository.findCustomerByStatus(pageable);
     }
-
-    @Override
-    public List<ContractDetail> findCustomerByStatus() {
-        return contractDetailRepository.findCustomerByStatus();
-    }
-
-    @Override
-    public void calculateTotalMoney() {
-        List<ContractDetail> contractDetails = contractDetailRepository.findCustomerByStatus();
-        List<Contract> contracts = contractRepository.findAll();
-
-        for (Contract contract : contracts) {
-            long totalMoney = contract.getService().getCost();
-            for (ContractDetail c : contractDetails) {
-                if (c.getContract().equals(contract)) {
-                    totalMoney += c.getQuantity() * c.getAttachService().getCost();
-                }
-            }
-            contract.setTotalMoney(totalMoney);
-            contractRepository.save(contract);
-        }
-    }
 }
+

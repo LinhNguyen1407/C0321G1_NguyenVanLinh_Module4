@@ -48,13 +48,13 @@ public class ContractDto implements Validator {
         ContractDto contractDto = (ContractDto) target;
 
         int timeDiff = contractDto.getStartDate().compareTo(LocalDate.now().toString());
-        if(timeDiff < 0) {
-            errors.rejectValue("startDate", "startDate","Start date must be not in past");
+        if (timeDiff < 0) {
+            errors.rejectValue("startDate", "startDate", "Start date must be not in past");
         }
 
         int period = contractDto.getEndDate().compareTo(contractDto.getStartDate());
-        if(period < 0) {
-            errors.rejectValue("endDate", "endDate","End date must not be less than start date");
+        if (period < 0) {
+            errors.rejectValue("endDate", "endDate", "End date must not be less than start date");
         }
     }
 }

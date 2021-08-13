@@ -44,7 +44,8 @@ public class ContractController {
     private EmployeeService employeeService;
 
     @GetMapping
-    public ModelAndView showListContracts(@PageableDefault(value = 2) Pageable pageable) {
+    public ModelAndView showListContracts(@PageableDefault(value = 4) Pageable pageable) {
+        contractService.calculateTotalMoney();
         ModelAndView modelAndView = new ModelAndView("/contract/list");
         Page<Contract> contractList = contractService.findAll(pageable);
         modelAndView.addObject("contractList", contractList);
@@ -65,7 +66,7 @@ public class ContractController {
                                  RedirectAttributes redirectAttributes,
                                  Model model) {
         new ContractDto().validate(contractDto, bindingResult);
-        if(bindingResult.hasFieldErrors()) {
+        if (bindingResult.hasFieldErrors()) {
             initCreateContract(model);
             return "/contract/create";
         } else {
@@ -79,12 +80,11 @@ public class ContractController {
     }
 
     private void initCreateContract(Model model) {
-        List<Customer> customerList = customerService.findAllByFlagDelEquals(0);
+        List<Customer> customerList = customerService.findAllByFlagDel();
         model.addAttribute("customerList", customerList);
         List<Service> serviceList = serviceService.findAll();
         model.addAttribute("serviceList", serviceList);
-        List<Employee> employeeList = employeeService.findAllByFlagDelEquals(0);
+        List<Employee> employeeList = employeeService.findAllByFlagDel();
         model.addAttribute("employeeList", employeeList);
     }
-
 }

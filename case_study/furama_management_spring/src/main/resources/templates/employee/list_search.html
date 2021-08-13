@@ -22,10 +22,10 @@
         </div>
         <div class="col-md-5">
             <form class="form-inline" action="/employee/search">
-                <input style="width: 272px" class="form-control mr-sm-2" type="search" name="name" placeholder="Name"
-                       aria-label="Search">
+                <input style="width: 272px" class="form-control mr-sm-2" type="search" name="name"
+                       th:value="${nameValue}" placeholder="Name" aria-label="Search">
                 <input style="width: 272px" class="form-control mr-sm-2" type="search" name="idCard"
-                       placeholder="ID Card" aria-label="Search">
+                       th:value="${idCardValue}" placeholder="ID Card" aria-label="Search">
                 <button style="width: 85px;" class="btn btn-outline-success my-2 my-sm-0 font-weight-bold"
                         type="submit">Search
                 </button>
@@ -72,17 +72,21 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{'/employee'(page=${employeeList.number - 1}, keyword=${keywordValue})}"
+                <a class="page-link"
+                   th:href="@{'/employee/search'(page=${employeeList.number - 1}, name=${nameValue}, division=${divisionValue})}"
                    th:if="${employeeList.hasPrevious()}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li class="page-item"><a class="page-link" th:href="@{'/employee'(page=0, keyword=${keywordValue})}">1</a>
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{'/employee/search'(page=0, name=${nameValue}, division=${divisionValue})}">1</a>
             </li>
-            <li class="page-item"><a class="page-link" th:href="@{'/employee'(page=1, keyword=${keywordValue})}">2</a>
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{'/employee/search'(page=1, name=${nameValue}, division=${divisionValue})}">2</a>
             </li>
             <li class="page-item">
-                <a class="page-link" th:href="@{'/employee'(page=${employeeList.number + 1} , keyword=${keywordValue})}"
+                <a class="page-link"
+                   th:href="@{'/employee/search'(page=${employeeList.number + 1} , name=${nameValue}, division=${divisionValue})}"
                    th:if="${employeeList.hasNext()}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

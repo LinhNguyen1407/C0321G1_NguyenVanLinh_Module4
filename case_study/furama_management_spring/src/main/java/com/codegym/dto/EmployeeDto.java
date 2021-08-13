@@ -8,14 +8,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 import javax.validation.constraints.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDto {
+public class EmployeeDto implements Validator {
 
     private Long id;
 
@@ -51,4 +57,31 @@ public class EmployeeDto {
 
     @NotNull(message = "Data must be not empty")
     private User user;
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        EmployeeDto employeeDto = (EmployeeDto) target;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar period = Calendar.getInstance();
+        Date date = null;
+        try {
+            date = dateFormat.parse(employeeDto.getBirthday());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (date != null) {
+            period.setTime(date);
+        }
+        period.add(Calendar.DATE, 18 * 365);
+        if (period.getTimeInMillis() - System.currentTimeMillis() > 0) {
+            errors.rejectValue("birthday", "birthday", "Age must be not less than 18");
+        }
+    }
 }

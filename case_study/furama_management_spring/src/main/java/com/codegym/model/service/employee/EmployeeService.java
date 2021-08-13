@@ -4,6 +4,7 @@ package com.codegym.model.service.employee;
 import com.codegym.model.entity.employee.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +20,10 @@ public interface EmployeeService {
 
     Page<Employee> findAll(Pageable pageable);
 
-    List<Employee> findAllByFlagDelEquals(int flagDel);
+    List<Employee> findAllByFlagDel();
 
-    Page<Employee> findAllByFlagDelEquals (int flagDel, Pageable pageable);
+    Page<Employee> findAllByFlagDel(Pageable pageable);
+
+    Page<Employee> searchByNameAndIdCard(String name, String idCard, Pageable pageable);
 
 }

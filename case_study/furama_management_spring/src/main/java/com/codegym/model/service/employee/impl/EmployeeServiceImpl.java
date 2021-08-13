@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -42,12 +43,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findAllByFlagDelEquals(int flagDel) {
-        return employeeRepository.findAllByFlagDelEquals(flagDel);
+    public List<Employee> findAllByFlagDel() {
+        return employeeRepository.findAllByFlagDel();
     }
 
     @Override
-    public Page<Employee> findAllByFlagDelEquals(int flagDel, Pageable pageable) {
-        return employeeRepository.findAllByFlagDelEquals(flagDel, pageable);
+    public Page<Employee> findAllByFlagDel(Pageable pageable) {
+        return employeeRepository.findAllByFlagDel(pageable);
+    }
+
+    @Override
+    public Page<Employee> searchByNameAndIdCard(String name, String idCard, Pageable pageable) {
+        return employeeRepository.searchByNameAndIdCard(name, idCard, pageable);
     }
 }

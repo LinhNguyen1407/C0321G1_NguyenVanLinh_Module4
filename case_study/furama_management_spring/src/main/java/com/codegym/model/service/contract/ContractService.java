@@ -14,4 +14,6 @@ public interface ContractService {
 
     Page<Contract> findAll(Pageable pageable);
 
+    void calculateTotalMoney();
+
 }

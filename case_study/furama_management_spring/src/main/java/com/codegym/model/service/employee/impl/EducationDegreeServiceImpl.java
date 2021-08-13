@@ -13,6 +13,7 @@ public class EducationDegreeServiceImpl implements EducationDegreeService {
 
     @Autowired
     private EducationDegreeRepository educationDegreeRepository;
+
     @Override
     public List<EducationDegree> findAll() {
         return educationDegreeRepository.findAll();

@@ -38,7 +38,7 @@ public class ServiceController {
 
 
     @GetMapping
-    public ModelAndView showListServices(@PageableDefault(value = 2) Pageable pageable) {
+    public ModelAndView showListServices(@PageableDefault(value = 4) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("/service/list");
         Page<Service> serviceList = serviceService.findAll(pageable);
         modelAndView.addObject("serviceList", serviceList);
@@ -63,10 +63,10 @@ public class ServiceController {
 
     @PostMapping("/create")
     public String createService(@Validated @ModelAttribute ServiceDto serviceDto,
-                                 BindingResult bindingResult,
-                                 RedirectAttributes redirectAttributes,
-                                 Model model) {
-        if(bindingResult.hasFieldErrors()){
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
+                                Model model) {
+        if (bindingResult.hasFieldErrors()) {
             initCreateService(model);
             return "/service/create";
         } else {

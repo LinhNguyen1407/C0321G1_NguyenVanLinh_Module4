@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Customer</title>
     <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
 </head>
@@ -13,6 +13,7 @@
     <form action="/customer/edit" th:object="${customerDto}" method="post">
         <input th:type="hidden" name="id" th:field="*{id}">
         <input th:type="hidden" name="flagDel" th:field="*{flagDel}">
+        <input th:type="hidden" name="code" th:field="*{code}">
         <div class="form-group">
             <label for="code">Code</label>
             <input type="text" class="form-control" name="code" id="code" th:field="*{code}"/>

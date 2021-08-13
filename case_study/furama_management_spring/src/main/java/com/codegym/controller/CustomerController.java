@@ -32,23 +32,23 @@ public class CustomerController {
     private CustomerTypeService customerTypeService;
 
     @GetMapping
-    public ModelAndView showListCustomers (@PageableDefault(value = 2) Pageable pageable) {
+    public ModelAndView showListCustomers(@PageableDefault(value = 4) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("/customer/list");
-        Page<Customer> customerList = customerService.findAllByFlagDelEquals(0, pageable);
+        Page<Customer> customerList = customerService.findAllByFlagDel(pageable);
         modelAndView.addObject("customerList", customerList);
         return modelAndView;
     }
 
     @GetMapping("/search")
-    public ModelAndView showListSearchCustomers(@PageableDefault(value = 2) Pageable pageable,
-                                  @RequestParam Optional<String> keyword) {
+    public ModelAndView showListSearchCustomers(@PageableDefault(value = 4) Pageable pageable,
+                                                @RequestParam Optional<String> keyword) {
         String keywordValue = "";
-        if(keyword.isPresent()){
+        if (keyword.isPresent()) {
             keywordValue = keyword.get();
         }
 
         ModelAndView modelAndView = new ModelAndView("/customer/list_search");
-        Page<Customer> customerList = customerService.findAllByNameContainingOrAddressContaining(keywordValue, keywordValue, pageable);
+        Page<Customer> customerList = customerService.findAllByNameOrAddress(keywordValue, pageable);
         modelAndView.addObject("customerList", customerList);
         modelAndView.addObject("keywordValue", keywordValue);
         return modelAndView;
@@ -72,12 +72,21 @@ public class CustomerController {
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes,
                                  Model model) {
-
-        if(bindingResult.hasFieldErrors()) {
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
             initCreateCustomer(model);
             return "/customer/create";
         } else {
             Customer customer = new Customer();
+            List<Customer> customers = customerService.findAll();
+            String newCode = "";
+            if (customers.isEmpty()) {
+                newCode = "KH-0001";
+            } else {
+                Long code = customers.get(customers.size() - 1).getId();
+                newCode = "KH-" + String.format("%04d", ++code);
+            }
+            customerDto.setCode(newCode);
             customerDto.setFlagDel(0);
             BeanUtils.copyProperties(customerDto, customer);
 
@@ -104,7 +113,8 @@ public class CustomerController {
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes,
                                  Model model) {
-        if(bindingResult.hasFieldErrors()) {
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
             initCreateCustomer(model);
             return "/customer/edit";
         } else {
@@ -126,14 +136,25 @@ public class CustomerController {
 //    }
 
     @PostMapping("/delete")
-    public String deleteCustomer(@RequestParam Long id,
-                                 RedirectAttributes redirectAttributes){
-        Optional<Customer> customer = customerService.findById(id);
-        customer.get().setFlagDel(1);
-        customerService.save(customer.get());
-        redirectAttributes.addFlashAttribute("message", "Delete customer " + customer.get().getName() + " successfull");
+    public String deleteCustomer(@RequestParam String idStrDel) {
+        String[] idStr = idStrDel.split(",");
+        for (String id : idStr) {
+            Optional<Customer> customer = customerService.findById(Long.parseLong(id));
+            customer.get().setFlagDel(1);
+            customerService.save(customer.get());
+        }
         return "redirect:/customer";
     }
+
+//    @PostMapping("/delete")
+//    public String deleteCustomer(@RequestParam Long id,
+//                                 RedirectAttributes redirectAttributes){
+//        Optional<Customer> customer = customerService.findById(id);
+//        customer.get().setFlagDel(1);
+//        customerService.save(customer.get());
+//        redirectAttributes.addFlashAttribute("message", "Delete customer " + customer.get().getName() + " successfull");
+//        return "redirect:/customer";
+//    }
 
     @GetMapping("/detail/{id}")
     public ModelAndView showInforCustomer(@PathVariable Long id) {

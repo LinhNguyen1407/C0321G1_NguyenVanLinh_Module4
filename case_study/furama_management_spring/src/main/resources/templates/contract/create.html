@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Contract</title>
     <link rel="stylesheet" type="text/css" href="/bootstrap4/css/bootstrap.css">
 </head>
@@ -38,10 +38,10 @@
             <input type="text" class="form-control" name="deposit" id="deposit" th:field="*{deposit}"/>
             <div style="color: red" th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></div>
         </div>
-<!--        <div class="form-group">-->
-<!--            <label for="totalMoney">Total Money</label>-->
-<!--            <input type="text" class="form-control" name="totalMoney" id="totalMoney" th:field="*{totalMoney}"/>-->
-<!--        </div>-->
+        <!--        <div class="form-group">-->
+        <!--            <label for="totalMoney">Total Money</label>-->
+        <!--            <input type="text" class="form-control" name="totalMoney" id="totalMoney" th:field="*{totalMoney}"/>-->
+        <!--        </div>-->
         <div class="form-group">
             <label for="employee">Employee</label>
             <select class="custom-select" th:field="*{employee.id}" id="employee">

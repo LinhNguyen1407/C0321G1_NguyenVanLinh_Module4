@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -42,18 +43,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Page<Customer> findAllByFlagDelEquals(int flagDel, Pageable pageable) {
-        return customerRepository.findAllByFlagDelEquals(flagDel, pageable);
+    public Page<Customer> findAllByFlagDel(Pageable pageable) {
+        return customerRepository.findAllByFlagDel(pageable);
     }
 
     @Override
-    public Page<Customer> findAllByNameContainingOrAddressContaining(String name, String address, Pageable pageable) {
-        return customerRepository.findAllByNameContainingOrAddressContaining(name, address, pageable);
+    public Page<Customer> findAllByNameOrAddress(String keyword, Pageable pageable) {
+        return customerRepository.findAllByNameOrAddress(keyword, pageable);
     }
 
     @Override
-    public List<Customer> findAllByFlagDelEquals(int flagDel) {
-        return customerRepository.findAllByFlagDelEquals(flagDel);
+    public List<Customer> findAllByFlagDel() {
+        return customerRepository.findAllByFlagDel();
     }
 
 }
