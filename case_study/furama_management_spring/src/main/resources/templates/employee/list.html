@@ -62,8 +62,13 @@
                 <td th:text="${e.email}"></td>
                 <td><a class="btn btn-success" th:href="@{/employee/detail/__${e.id}__}" role="button">Detail</a></td>
                 <td><a class="btn btn-warning" th:href="@{/employee/edit/__${e.id}__}" role="button">Edit</a></td>
-                <td><a class="btn btn-danger" th:onclick="|deleteEmployee(${e.id})|" data-toggle="modal"
-                       data-target="#modalDel">Delete</a></td>
+                <td>
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#modalDel"
+                       th:data1="${e.id}" th:data2="${e.name}"
+                       th:onclick="|deleteEmployee(this.getAttribute('data1'),this.getAttribute('data2'))|">
+                        Delete
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -101,8 +106,8 @@
                 </button>
             </div>
             <form action="/employee/delete" method="post">
-                <input type="hidden" name="id" id="employeeDel"/>
-                <div class="modal-body">Are you sure to delete ?
+                <input type="hidden" name="id" id="idDel"/>
+                <div class="modal-body">Are you sure to delete <span id="nameDel"></span> ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -118,8 +123,9 @@
 <script src="/bootstrap4/js/bootstrap.js"></script>
 
 <script>
-    function deleteEmployee(id) {
-        document.getElementById("employeeDel").value = id;
+    function deleteEmployee(id, name) {
+        document.getElementById("idDel").value = id;
+        document.getElementById("nameDel").innerHTML = name;
     }
 
 </script>
